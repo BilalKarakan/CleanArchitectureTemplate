@@ -1,4 +1,6 @@
-﻿namespace CleanArchitectureTemplate.Domain.Abstractions;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CleanArchitectureTemplate.Domain.Abstractions;
 
 public abstract class BaseEntity
 {
