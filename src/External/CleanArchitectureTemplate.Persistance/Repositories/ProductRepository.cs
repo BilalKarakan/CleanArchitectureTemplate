@@ -6,7 +6,7 @@ namespace CleanArchitectureTemplate.Persistance.Repositories;
 
 public class ProductRepository : GenericRepository<Product>, IProductRepository
 {
-    public ProductRepository(ApplicationDbContext _context) : base(_context)
+    public ProductRepository(ApplicationDbContext _context, IUnitOfWork _unitOfWork) : base(_context, _unitOfWork)
     {
     }
 }

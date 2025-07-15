@@ -16,6 +16,9 @@ builder.Services.AddControllers().AddApplicationPart(typeof(CleanArchitectureTem
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper(typeof(CleanArchitectureTemplate.Persistance.AssemblyReference).Assembly);
+
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"), b => b.MigrationsAssembly("CleanArchitectureTemplate.Persistance"));
@@ -25,7 +28,7 @@ builder.Services.AddMediatR(cfr => cfr.RegisterServicesFromAssembly(typeof(Clean
 builder.Services.AddScoped(typeof(IGenericCommandRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddAutoMapper(typeof(CleanArchitectureTemplate.Presentation.AssemblyReference).Assembly);
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 

@@ -6,10 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitectureTemplate.Presentation.Controllers;
 
-public class ProductsController(IMediator _mediator) : ControllerBase, IProductService
+public class ProductsController(IMediator _mediator) : ControllerBase
 {
     [HttpPost("[action]")]
-    public async Task CreateAsync(CreateProductCommand request, CancellationToken cancellationToken = default) => Ok(await _mediator.Send(request, cancellationToken));
+    public async Task<IActionResult> CreateAsync(CreateProductCommand request, CancellationToken cancellationToken = default)
+    {
+        var query = await _mediator.Send(request, cancellationToken);
+        return Ok(query);
+    }
 
     [NonAction]
     public void Delete(Product product, CancellationToken cancellationToken = default)
