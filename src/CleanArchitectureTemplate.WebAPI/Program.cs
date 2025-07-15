@@ -1,8 +1,11 @@
+using CleanArchitectureTemplate.Application.Behaviors;
 using CleanArchitectureTemplate.Application.Services;
 using CleanArchitectureTemplate.Domain.IRepositories;
 using CleanArchitectureTemplate.Persistance.Contexts;
 using CleanArchitectureTemplate.Persistance.Repositories;
 using CleanArchitectureTemplate.Persistance.Services;
+using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Scalar.AspNetCore;
@@ -25,6 +28,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 builder.Services.AddMediatR(cfr => cfr.RegisterServicesFromAssembly(typeof(CleanArchitectureTemplate.Application.AssemblyReference).Assembly));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+builder.Services.AddValidatorsFromAssembly(typeof(CleanArchitectureTemplate.Application.AssemblyReference).Assembly);
 builder.Services.AddScoped(typeof(IGenericCommandRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
