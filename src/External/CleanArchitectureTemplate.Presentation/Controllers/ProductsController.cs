@@ -9,7 +9,7 @@ namespace CleanArchitectureTemplate.Presentation.Controllers;
 public class ProductsController(IMediator _mediator) : ControllerBase
 {
     [HttpPost("[action]")]
-    public async Task<IActionResult> CreateAsync(CreateProductCommand request, CancellationToken cancellationToken = default)
+    public async Task<IActionResult> CreateAsync(CreateProductCommand request, CancellationToken cancellationToken)
     {
         var query = await _mediator.Send(request, cancellationToken);
         return Ok(query);

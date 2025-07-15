@@ -4,6 +4,7 @@ using CleanArchitectureTemplate.Domain.IRepositories;
 using CleanArchitectureTemplate.Persistance.Contexts;
 using CleanArchitectureTemplate.Persistance.Repositories;
 using CleanArchitectureTemplate.Persistance.Services;
+using CleanArchitectureTemplate.WebAPI.Middleware;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -34,6 +35,7 @@ builder.Services.AddScoped(typeof(IGenericCommandRepository<>), typeof(GenericRe
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddTransient<ExceptionMiddleware>();
 
 var app = builder.Build();
 
@@ -49,6 +51,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddlewareExtensions();
 
 app.UseHttpsRedirection();
 
