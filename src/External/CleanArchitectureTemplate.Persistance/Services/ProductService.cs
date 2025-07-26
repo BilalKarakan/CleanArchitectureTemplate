@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CleanArchitectureTemplate.Application.Features.ProductFeatures.Commands.CreateProduct;
+using CleanArchitectureTemplate.Application.Features.ProductFeatures.Queries.GetAllProduct;
 using CleanArchitectureTemplate.Application.Services;
 using CleanArchitectureTemplate.Domain.Entities;
 using CleanArchitectureTemplate.Domain.IRepositories;
@@ -12,7 +13,7 @@ public class ProductService(IProductRepository _repository, IMapper _mapper) : I
 
     public void Delete(Product product, CancellationToken cancellationToken = default) => _repository.Delete(product);
 
-    public async Task GetAllAsync() => await _repository.GetAllAsync();
+    public async Task<IEnumerable<Product>> GetAllAsync(GetAllProductQuery request, CancellationToken cancellationToken) => await _repository.GetAllAsync(cancellationToken);
 
     public async Task<Product> GetByIdAsync(string id, CancellationToken cancellationToken = default) => await _repository.GetByIdAsync(id);
 

@@ -1,4 +1,5 @@
 ﻿using CleanArchitectureTemplate.Application.Features.ProductFeatures.Commands.CreateProduct;
+using CleanArchitectureTemplate.Application.Features.ProductFeatures.Queries.GetAllProduct;
 using CleanArchitectureTemplate.Application.Services;
 using CleanArchitectureTemplate.Domain.Entities;
 using MediatR;
@@ -21,10 +22,11 @@ public class ProductsController(IMediator _mediator) : ControllerBase
         throw new NotImplementedException();
     }
 
-    [NonAction]
-    public Task GetAllAsync()
+    [HttpPost("[action]")]
+    public async Task<IActionResult> GetAllAsync(GetAllProductQuery request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        IEnumerable<Product> response = await _mediator.Send(request, cancellationToken);
+        return Ok(response);
     }
 
     [NonAction]
