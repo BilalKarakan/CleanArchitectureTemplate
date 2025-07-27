@@ -1,4 +1,5 @@
-﻿using CleanArchitectureTemplate.Application.Features.ProductFeatures.Commands.CreateProduct;
+﻿using CleanArchitectureTemplate.Application.DTOs;
+using CleanArchitectureTemplate.Application.Features.ProductFeatures.Commands.CreateProduct;
 using CleanArchitectureTemplate.Application.Features.ProductFeatures.Queries.GetAllProduct;
 using CleanArchitectureTemplate.Application.Services;
 using CleanArchitectureTemplate.Domain.Entities;
@@ -25,7 +26,7 @@ public class ProductsController(IMediator _mediator) : ControllerBase
     [HttpPost("[action]")]
     public async Task<IActionResult> GetAllAsync(GetAllProductQuery request, CancellationToken cancellationToken)
     {
-        IEnumerable<Product> response = await _mediator.Send(request, cancellationToken);
+        PagedResult<Product> response = await _mediator.Send(request, cancellationToken);
         return Ok(response);
     }
 

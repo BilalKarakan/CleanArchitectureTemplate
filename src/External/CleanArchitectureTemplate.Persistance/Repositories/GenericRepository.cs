@@ -1,5 +1,7 @@
-﻿using CleanArchitectureTemplate.Domain.IRepositories;
+﻿using CleanArchitectureTemplate.Application.DTOs;
+using CleanArchitectureTemplate.Domain.IRepositories;
 using CleanArchitectureTemplate.Persistance.Contexts;
+using MediatR.NotificationPublishers;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -28,4 +30,6 @@ public class GenericRepository<T>(ApplicationDbContext _context, IUnitOfWork _un
         _context.Set<T>().Update(entity);
         _unitOfWork.SaveChanges();
     }
+
+    public IQueryable<T> GetQueryable(CancellationToken cancellationToken) => _context.Set<T>().AsQueryable();
 }
