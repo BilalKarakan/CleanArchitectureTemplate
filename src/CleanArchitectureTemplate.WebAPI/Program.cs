@@ -1,5 +1,7 @@
 using CleanArchitectureTemplate.Application.Behaviors;
+using CleanArchitectureTemplate.Application.IServices;
 using CleanArchitectureTemplate.Application.Services;
+using CleanArchitectureTemplate.Domain.Entities;
 using CleanArchitectureTemplate.Domain.IRepositories;
 using CleanArchitectureTemplate.Persistance.Contexts;
 using CleanArchitectureTemplate.Persistance.Repositories;
@@ -7,6 +9,7 @@ using CleanArchitectureTemplate.Persistance.Services;
 using CleanArchitectureTemplate.WebAPI.Middleware;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Scalar.AspNetCore;
@@ -27,6 +30,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"), b => b.MigrationsAssembly("CleanArchitectureTemplate.Persistance"));
 });
+builder.Services.AddIdentity<User, IdentityRole>(options =>
+{
+    //options.Password.RequiredLength = 6;
+    //options.Password.RequireDigit = true;
+    //options.Password.RequireLowercase = true;
+    //options.Password.RequireUppercase = true;
+    //options.Password.RequireNonAlphanumeric = false;
+    //options.User.RequireUniqueEmail = true;
+}).AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddMediatR(cfr => cfr.RegisterServicesFromAssembly(typeof(CleanArchitectureTemplate.Application.AssemblyReference).Assembly));
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
@@ -34,6 +46,7 @@ builder.Services.AddValidatorsFromAssembly(typeof(CleanArchitectureTemplate.Appl
 builder.Services.AddScoped(typeof(IGenericCommandRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddTransient<ExceptionMiddleware>();
 

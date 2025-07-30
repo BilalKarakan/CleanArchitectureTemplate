@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CleanArchitectureTemplate.Application.Features.AuthFeatures.Commands.Register;
 using CleanArchitectureTemplate.Application.Features.ProductFeatures.Commands.CreateProduct;
 using CleanArchitectureTemplate.Domain.Entities;
 
@@ -10,6 +11,10 @@ public class Mapper : Profile
     {
         #region Product
         CreateMap<CreateProductCommand, Product>().ReverseMap();
+        #endregion
+
+        #region User
+        CreateMap<RegisterCommand, User>().ReverseMap();
         #endregion
     }
 }
