@@ -3,6 +3,7 @@ using CleanArchitectureTemplate.Application.IServices;
 using CleanArchitectureTemplate.Application.Services;
 using CleanArchitectureTemplate.Domain.Entities;
 using CleanArchitectureTemplate.Domain.IRepositories;
+using CleanArchitectureTemplate.Infrastructure.Services;
 using CleanArchitectureTemplate.Persistance.Contexts;
 using CleanArchitectureTemplate.Persistance.Repositories;
 using CleanArchitectureTemplate.Persistance.Services;
@@ -54,6 +55,7 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IJwtGenerator, JwtGenerator>();
 builder.Services.AddTransient<ExceptionMiddleware>();
 
 var app = builder.Build();
