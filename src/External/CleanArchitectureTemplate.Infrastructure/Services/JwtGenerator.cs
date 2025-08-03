@@ -25,7 +25,8 @@ public class JwtGenerator : IJwtGenerator
         Claim[] claims = new Claim[]
         {
             new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-            new Claim(JwtRegisteredClaimNames.Jti, user.Id)
+            new Claim(JwtRegisteredClaimNames.Name, user.Name),
+            new Claim(ClaimTypes.Surname, user.LastName),
         };
 
         DateTime expires = DateTime.Now.AddMinutes(30);  
@@ -52,10 +53,7 @@ public class JwtGenerator : IJwtGenerator
                 Token: token,
                 RefreshToken: refreshToken,
                 RefreshTokenExpire: user.RefreshTokenExpire,
-                UserId: user.Id,
-                Name: user.Name,
-                LastName: user.LastName,
-                Email: user.Email!
+                UserId: user.Id
             );
 
         return response;
