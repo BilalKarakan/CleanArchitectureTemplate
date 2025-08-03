@@ -7,6 +7,7 @@ using CleanArchitectureTemplate.Persistance.Contexts;
 using CleanArchitectureTemplate.Persistance.Repositories;
 using CleanArchitectureTemplate.Persistance.Services;
 using CleanArchitectureTemplate.WebAPI.Middleware;
+using CleanArchitectureTemplate.WebAPI.Options;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -39,6 +40,11 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
     //options.Password.RequireNonAlphanumeric = false;
     //options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.ConfigureOptions<JwtOptionsConfiguration>();
+builder.Services.ConfigureOptions<JwtBearerOptionsConfiguration>();
+
+builder.Services.AddAuthentication().AddJwtBearer();
 
 builder.Services.AddMediatR(cfr => cfr.RegisterServicesFromAssembly(typeof(CleanArchitectureTemplate.Application.AssemblyReference).Assembly));
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
