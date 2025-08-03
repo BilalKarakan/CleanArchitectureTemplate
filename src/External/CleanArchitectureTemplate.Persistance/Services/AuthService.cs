@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CleanArchitectureTemplate.Application.Features.AuthFeatures.Commands.CreateTokenByRefreshToken;
 using CleanArchitectureTemplate.Application.Features.AuthFeatures.Commands.Login;
 using CleanArchitectureTemplate.Application.Features.AuthFeatures.Commands.Register;
 using CleanArchitectureTemplate.Application.IServices;
@@ -10,6 +11,19 @@ namespace CleanArchitectureTemplate.Persistance.Services;
 
 public class AuthService(UserManager<User> _userManager, IMapper _mapper, IJwtGenerator _jwtGenator) : IAuthService
 {
+    public async Task<LoginCommandResponse> CreateTokenByRefreshToken(CreateTokenByRefreshTokenCommand request, CancellationToken cancellationToken)
+    {
+        var user = await _userManager.FindByIdAsync(request.UserId.ToString());
+        if (user == null)
+            throw new Exception("User not found");
+
+        if (user.RefreshToken != request.RefreshToken || user.RefreshTokenExpire < DateTime.Now)
+            throw new Exception("Invalid refresh token");
+
+        LoginCommandResponse response = await _jwtGenator.CreateTokenAsync(user);
+        return response;
+    }
+
     public async Task<LoginCommandResponse> LoginAsync(LoginCommand request, CancellationToken cancellationToken)
     {
         User? user = await _userManager.Users.Where(u => u.UserName == request.UserNameOrEmail || u.Email == request.UserNameOrEmail).FirstOrDefaultAsync(cancellationToken);
