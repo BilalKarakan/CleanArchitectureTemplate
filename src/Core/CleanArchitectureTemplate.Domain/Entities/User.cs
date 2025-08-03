@@ -9,8 +9,8 @@ public class User : IdentityUser<string>
         Id = Guid.NewGuid().ToString();
     }
 
-    public string  Name{ get; set; }
+    public string Name{ get; set; }
     public string LastName { get; set; }
-    public string RefreshToken { get; set; }
+    public string? RefreshToken { get; set; }
     public DateTime? RefreshTokenExpire { get; set; }
 }

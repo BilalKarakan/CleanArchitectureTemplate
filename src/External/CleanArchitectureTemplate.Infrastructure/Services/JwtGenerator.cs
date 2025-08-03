@@ -16,9 +16,10 @@ public class JwtGenerator : IJwtGenerator
 {
     private readonly JwtOptions _jwtoptions;
     private readonly UserManager<User> _userManager;
-    public JwtGenerator(IOptions<JwtOptions> jwtOptions)
+    public JwtGenerator(IOptions<JwtOptions> jwtOptions, UserManager<User> userManager)
     {
         _jwtoptions = jwtOptions.Value;
+        _userManager = userManager;
     }
     public async Task<LoginCommandResponse> CreateTokenAsync(User user)
     {

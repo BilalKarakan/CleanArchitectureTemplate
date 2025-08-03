@@ -22,5 +22,8 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
             .Matches("[a-z]").WithMessage("Password must contain at least one lowercase letter.")
             .Matches("[0-9]").WithMessage("Password must contain at least one number.")
             .Matches("[^a-zA-Z0-9]").WithMessage("Password must contain at least one special character!");
+
+        RuleFor(x => x.Name).NotNull().WithMessage("Name Must Not Be Empty!").NotEmpty().WithMessage("Name Must Not Be Empty!").MaximumLength(100).WithMessage("Name Must Not Exceed 100 Characters!").MinimumLength(2).WithMessage("Name must be at least 2 characters!");
+        RuleFor(x => x.LastName).NotNull().WithMessage("LastName Must Not Be Empty!").NotEmpty().WithMessage("LastName Must Not Be Empty!").MaximumLength(100).WithMessage("lastName Must Not Exceed 100 Characters!").MinimumLength(1).WithMessage("LastName must be at least 2 characters!");
     }
 }
