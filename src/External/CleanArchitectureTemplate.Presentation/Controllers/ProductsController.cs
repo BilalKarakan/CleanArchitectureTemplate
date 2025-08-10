@@ -4,10 +4,12 @@ using CleanArchitectureTemplate.Application.Features.ProductFeatures.Queries.Get
 using CleanArchitectureTemplate.Application.Services;
 using CleanArchitectureTemplate.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitectureTemplate.Presentation.Controllers;
 
+[Authorize(AuthenticationSchemes = "Bearer")]
 public class ProductsController(IMediator _mediator) : ControllerBase
 {
     [HttpPost("[action]")]

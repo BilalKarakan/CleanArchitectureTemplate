@@ -6,5 +6,5 @@ namespace CleanArchitectureTemplate.Application.Features.AuthFeatures.Commands.C
 
 public class CreateTokenByRefreshTokenCommandHandler(IAuthService _authService) : IRequestHandler<CreateTokenByRefreshTokenCommand, LoginCommandResponse>
 {
-    public Task<LoginCommandResponse> Handle(CreateTokenByRefreshTokenCommand request, CancellationToken cancellationToken) =>  _authService.CreateTokenByRefreshToken(request, cancellationToken);
+    public async Task<LoginCommandResponse> Handle(CreateTokenByRefreshTokenCommand request, CancellationToken cancellationToken) =>  await _authService.CreateTokenByRefreshToken(request, cancellationToken);
 }
