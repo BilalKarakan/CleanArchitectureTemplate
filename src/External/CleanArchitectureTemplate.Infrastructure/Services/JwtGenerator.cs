@@ -25,9 +25,12 @@ public class JwtGenerator : IJwtGenerator
     {
         Claim[] claims = new Claim[]
         {
-            new Claim(JwtRegisteredClaimNames.Email, user.Email!),
-            new Claim(JwtRegisteredClaimNames.Name, user.Name),
+            new Claim(ClaimTypes.NameIdentifier, user.Id),
             new Claim(ClaimTypes.Surname, user.LastName),
+            new Claim(ClaimTypes.Name, user.Name),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email!),
+            new Claim(JwtRegisteredClaimNames.Name, user.UserName),
+            
         };
 
         DateTime expires = DateTime.Now.AddMinutes(30);  
@@ -36,7 +39,7 @@ public class JwtGenerator : IJwtGenerator
             (
                 issuer: _jwtoptions.Issuer,
                 audience: _jwtoptions.Audience,
-                claims: null,
+                claims: claims,
                 notBefore: DateTime.Now,
                 expires: expires,
                 signingCredentials: new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtoptions.SecretKey)), algorithm: SecurityAlgorithms.HmacSha256)

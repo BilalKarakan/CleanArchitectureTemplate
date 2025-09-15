@@ -57,7 +57,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnection"), b => b.MigrationsAssembly("CleanArchitectureTemplate.Persistance"));
 });
-builder.Services.AddIdentity<User, IdentityRole>(options =>
+builder.Services.AddIdentity<User, Role>(options =>
 {
     //options.Password.RequiredLength = 6;
     //options.Password.RequireDigit = true;
@@ -80,7 +80,10 @@ builder.Services.AddScoped(typeof(IGenericCommandRepository<>), typeof(GenericRe
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IUserRoleRepository, UserRoleRepository>();
+builder.Services.AddScoped<IUserRoleService, UserRoleService>();
 builder.Services.AddScoped<IJwtGenerator, JwtGenerator>();
 builder.Services.AddTransient<ExceptionMiddleware>();
 

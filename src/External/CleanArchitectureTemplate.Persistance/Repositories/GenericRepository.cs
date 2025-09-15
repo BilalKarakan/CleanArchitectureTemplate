@@ -3,6 +3,7 @@ using CleanArchitectureTemplate.Domain.IRepositories;
 using CleanArchitectureTemplate.Persistance.Contexts;
 using MediatR.NotificationPublishers;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace CleanArchitectureTemplate.Persistance.Repositories;
@@ -32,4 +33,10 @@ public class GenericRepository<T>(ApplicationDbContext _context, IUnitOfWork _un
     }
 
     public IQueryable<T> GetQueryable(CancellationToken cancellationToken) => _context.Set<T>().AsQueryable();
+
+    public IQueryable<T> GetWhere(Expression<Func<T, bool>> expression)
+    {
+        var result = _context.Set<T>().Where(expression);
+        return result;
+    }
 }

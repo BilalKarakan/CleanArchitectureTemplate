@@ -3,15 +3,19 @@ using CleanArchitectureTemplate.Application.Features.ProductFeatures.Commands.Cr
 using CleanArchitectureTemplate.Application.Features.ProductFeatures.Queries.GetAllProduct;
 using CleanArchitectureTemplate.Application.Services;
 using CleanArchitectureTemplate.Domain.Entities;
+using CleanArchitectureTemplate.Infrastructure.Authorization;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitectureTemplate.Presentation.Controllers;
 
+[ApiController]
+[Route("[controller]")]
 [Authorize(AuthenticationSchemes = "Bearer")]
 public class ProductsController(IMediator _mediator) : ControllerBase
 {
+    [RoleFilter("Create")]
     [HttpPost("[action]")]
     public async Task<IActionResult> CreateAsync(CreateProductCommand request, CancellationToken cancellationToken)
     {
@@ -25,6 +29,7 @@ public class ProductsController(IMediator _mediator) : ControllerBase
         throw new NotImplementedException();
     }
 
+    [RoleFilter("GetAll")]
     [HttpPost("[action]")]
     public async Task<IActionResult> GetAllAsync(GetAllProductQuery request, CancellationToken cancellationToken)
     {

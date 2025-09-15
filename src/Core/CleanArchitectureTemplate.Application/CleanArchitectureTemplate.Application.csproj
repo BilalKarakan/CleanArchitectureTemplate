@@ -15,4 +15,8 @@
     <ProjectReference Include="..\CleanArchitectureTemplate.Domain\CleanArchitectureTemplate.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\RoleFeatures\Queries\" />
+  </ItemGroup>
+
 </Project>
